@@ -1,0 +1,7 @@
+{
+  "tasks": {
+    "aoc": "deno run -A --env-file main.ts",
+    "run": "deno run -A --env-file main.ts solution"
+  },
+  "imports": {}
+}
