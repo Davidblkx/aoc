@@ -1,7 +1,19 @@
 {
   "tasks": {
     "aoc": "deno run -A --env-file main.ts",
-    "run": "deno run -A --env-file main.ts solution"
+    "run": "deno run -A --env-file main.ts solution",
+    "auth": "deno run -A --env-file main.ts create-session",
+    "setup": "deno run -A --env-file main.ts setup"
   },
-  "imports": {}
+  "imports": {
+    "@std/fs": "jsr:@std/fs",
+    "@utils/": "./utils/"
+  },
+  "fmt": {
+    "indentWidth": 2,
+    "lineWidth": 120,
+    "semiColons": true,
+    "singleQuote": true,
+    "useTabs": false
+  }
 }
