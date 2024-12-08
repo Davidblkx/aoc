@@ -1,22 +1,9 @@
 import { writeError, writeSuccess, writeWarning } from '@utils/console.ts';
 import { exists, ensureDir } from '@std/fs';
-import { buildInputFolder, buildSolutionFile, buildSolutionFolder } from '@utils/inputs.ts';
+import { buildInputFolder, buildSolutionFile, buildSolutionFolder, readDateFromArgs } from '@utils/inputs.ts';
 
 export async function run(args: string[]): Promise<void> {
-  if (args.length === 0) {
-    errorMissingArgument();
-  }
-
-  const input0 = args[0];
-  const year = input0.length === 4 ? parseInt(input0) : new Date().getFullYear();
-
-  const rawDay = input0.length === 4 ? args[1] : input0;
-  const day = parseInt(rawDay, 10);
-  if (isNaN(day) || day < 1 || day > 25) {
-    writeError('Invalid day argument: ' + rawDay);
-    errorMissingArgument();
-  }
-
+  const [year, day] = readDateFromArgs(args);
   await setup(year, day);
 }
 
@@ -31,12 +18,6 @@ export function help(): string {
     Description:
         This command will setup the boilerplate for the advent of code challenge for the given year and day
     `.trim();
-}
-
-function errorMissingArgument(): void {
-  writeError('Missing valid day argument');
-  console.log(help());
-  Deno.exit(1);
 }
 
 async function setup(year: number, day: number): Promise<void> {
@@ -90,7 +71,7 @@ async function fetchInput(year: number, day: number): Promise<string> {
 function buildTemplate(year: number, day: number): string {
   return `
 // Advent of Code ${year} Day ${day}
-export async function solve(input: string): Promise<string> {
+export function solve(_input: string): Promise<unknown> {
   throw new Error('Not implemented');
 }
 `.trim();

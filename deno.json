@@ -10,7 +10,7 @@
     "@utils/": "./utils/"
   },
   "fmt": {
-    "indentWidth": 2,
+    "indentWidth": 4,
     "lineWidth": 120,
     "semiColons": true,
     "singleQuote": true,
