@@ -1,5 +1,6 @@
 import { exists } from '@std/fs';
-import { writeError } from './console.ts';
+import { writeError } from "@utils/console.ts";
+import { isTest } from '@utils/signals.ts';
 
 export function buildInputFolder(year: number, day: number): string {
     return `inputs/${year}/day${day.toString().padStart(2, '0')}`;
@@ -36,10 +37,10 @@ function errorMissingArgument(): void {
   Deno.exit(1);
 }
 
-export async function readInput(year: number, day: number, isTest = false): Promise<string> {
+export async function readInput(year: number, day: number): Promise<string> {
     const folder = buildInputFolder(year, day);
 
-    const file = isTest ? `${folder}/test-input.txt` : `${folder}/input.txt`;
+    const file = isTest() ? `${folder}/test-input.txt` : `${folder}/input.txt`;
     if (!await exists(file)) {
         throw new Error(`Input file not found: ${file}`);
     }

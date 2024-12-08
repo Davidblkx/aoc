@@ -1,5 +1,7 @@
 import { trimEnd } from "@utils/string.ts";
 import type { CliModule } from "./cli/model.ts";
+import { loadSignals, isDebug, isTest } from "@utils/signals.ts";
+import { writeWarning } from "@utils/console.ts";
 
 if (Deno.args.length === 0 || Deno.args[0] === "--help") {
   console.error("%cNo command provided, valid commands:", "color: red;");
@@ -11,7 +13,17 @@ if (Deno.args.length === 0 || Deno.args[0] === "--help") {
   Deno.exit(1);
 }
 
-const [cmd, ...args] = Deno.args;
+const [cmd, ...fullArgs] = Deno.args;
+const args = loadSignals(fullArgs);
+
+if (isTest()) {
+  writeWarning("Running in test mode");
+}
+
+if (isDebug()) {
+  writeWarning("Running in debug mode");
+}
+
 const moduleFile = `./cli/${cmd}.cli.ts`;
 const module: CliModule = await import(moduleFile);
 
