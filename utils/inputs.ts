@@ -47,7 +47,7 @@ export async function readInput(year: number, day: number, isTest = false): Prom
     return Deno.readTextFile(file);
 }
 
-export async function readTestSolution(year: number, day: number): Promise<string> {
+export async function readTestSolution(year: number, day: number): Promise<[string, string]> {
     const folder = buildInputFolder(year, day);
 
     const file = `${folder}/test-expected.txt`;
@@ -55,5 +55,5 @@ export async function readTestSolution(year: number, day: number): Promise<strin
         throw new Error(`Solution file not found: ${file}`);
     }
 
-    return Deno.readTextFile(file);
+    return (await Deno.readTextFile(file)).split('\n').filter(e => e !== '###') as [string, string];
 }
