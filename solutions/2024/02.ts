@@ -1,6 +1,5 @@
 // Advent of Code 2024 Day 2
-import { parseLines, parseLineNumbers } from '@utils/parsers.ts';
-import { skipSolution } from '@utils/exporters.ts';
+import { parseLineNumbers } from '@utils/parsers.ts';
 
 export async function solve(input: string): Promise<[unknown, unknown]> {
     return [await solution1(input), await solution2(input)];

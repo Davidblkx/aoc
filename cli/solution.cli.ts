@@ -17,6 +17,7 @@ export async function run(args: string[]) {
 
     try {
         const t0 = performance.now();
+        // TODO: Rewrite it to have 2 separate functions for each part
         const [s1, s2] = await module.solve(input);
         const t1 = performance.now();
 

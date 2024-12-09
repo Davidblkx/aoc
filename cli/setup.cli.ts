@@ -29,8 +29,8 @@ async function setup(year: number, day: number): Promise<void> {
     await ensureDir(inputFolder);
     await ensureDir(outputFolder);
 
-    await writeIfMissing(`${inputFolder}/test-input.txt`, '');
-    await writeIfMissing(`${inputFolder}/test-expected.txt`, buildExpectedTemplate());
+    await writeIfMissing(`${inputFolder}/test-input.txt`, 'INPUT1\n###//###\nINPUT2');
+    await writeIfMissing(`${inputFolder}/test-expected.txt`, '0\n###\n0');
     await writeIfMissing(buildSolutionFile(year, day), buildTemplate(year, day));
 
     const inputContent = await fetchInput(year, day);
@@ -87,12 +87,5 @@ function solution2(input: string): Promise<unknown> | unknown {
     const lines = parseLines(input);
     return skipSolution(lines);
 }
-`.trim();
-}
-
-function buildExpectedTemplate(): string {
-    return `0
-###
-0
 `.trim();
 }

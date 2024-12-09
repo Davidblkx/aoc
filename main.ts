@@ -3,7 +3,11 @@ import type { CliModule } from "./cli/model.ts";
 import { loadSignals, isDebug, isTest } from "@utils/signals.ts";
 import { writeWarning } from "@utils/console.ts";
 
-if (Deno.args.length === 0 || Deno.args[0] === "--help") {
+// Used for debugging
+//const ARGS = ["solution", "3", "-t"];
+const ARGS = Deno.args;
+
+if (ARGS.length === 0 || ARGS[0] === "--help") {
   console.error("%cNo command provided, valid commands:", "color: red;");
   for await (const entry of Deno.readDir("./cli")) {
     if (entry.isFile && entry.name.endsWith(".cli.ts")) {
@@ -13,7 +17,7 @@ if (Deno.args.length === 0 || Deno.args[0] === "--help") {
   Deno.exit(1);
 }
 
-const [cmd, ...fullArgs] = Deno.args;
+const [cmd, ...fullArgs] = ARGS;
 const args = loadSignals(fullArgs);
 
 if (isTest()) {

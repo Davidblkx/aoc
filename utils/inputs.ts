@@ -37,7 +37,7 @@ function errorMissingArgument(): void {
   Deno.exit(1);
 }
 
-export async function readInput(year: number, day: number): Promise<string> {
+export async function readInput(year: number, day: number): Promise<string[]> {
     const folder = buildInputFolder(year, day);
 
     const file = isTest() ? `${folder}/test-input.txt` : `${folder}/input.txt`;
@@ -45,7 +45,13 @@ export async function readInput(year: number, day: number): Promise<string> {
         throw new Error(`Input file not found: ${file}`);
     }
 
-    return Deno.readTextFile(file);
+    const input = await Deno.readTextFile(file);
+    if (!isTest()) {
+        return [input];
+    }
+
+    const parts = input.split('###//###').map(e => e.trim());
+    return parts.length === 1 ? [parts[0], parts[0]] : parts;
 }
 
 export async function readTestSolution(year: number, day: number): Promise<[string, string]> {
